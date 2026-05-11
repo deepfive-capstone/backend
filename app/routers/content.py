@@ -1,8 +1,9 @@
 from fastapi import APIRouter
-from app.services.content_service import get_preview_card
+from app.services.content_service import get_content_card
+from app.schemas.content import ContentCreateRequest, ContentResponse
 
-router=APIRouter(prefix="/content", tags=["content"])
+router=APIRouter(prefix="/contents", tags=["contents"])
 
-@router.get("/preview")
-def preview_content():
-    return get_preview_card()
+@router.post("",response_model=ContentResponse)
+async def create_content(request:ContentCreateRequest):
+    return await get_content_card(str(request.url))
