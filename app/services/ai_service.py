@@ -5,6 +5,7 @@ AI_SERVER_URL="http://127.0.0.1:8001"
 
 #URL 문자열을 받아서 AI서버에 넘기고, AI응답 JSON을 dict 형태로 돌려주는 함수
 async def analyze_youtube_url(url:str)-> dict: 
+
     try:
         #AI서버 호출하는 부분
         async with httpx.AsyncClient(timeout=120.0) as client:
