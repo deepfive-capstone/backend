@@ -5,7 +5,6 @@ AI_SERVER_URL="http://127.0.0.1:8001"
 
 #URL 문자열을 받아서 AI서버에 넘기고, AI응답 JSON을 dict 형태로 돌려주는 함수
 async def analyze_youtube_url(url:str)-> dict: 
-
     try:
         #AI서버 호출하는 부분
         async with httpx.AsyncClient(timeout=120.0) as client:
@@ -43,6 +42,12 @@ async def analyze_youtube_url(url:str)-> dict:
         raise HTTPException(
             status_code=502,
             detail="AI 응답이 JSON 형식이 아닙니다."
+        )
+    
+    if "error" in data:
+        raise HTTPException(
+            status_code=400,
+            detail=data["error"]
         )
     
     required_fields=["video_id", "category","summary"]
