@@ -1,7 +1,7 @@
 #프론트<->백엔드
 
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel, HttpUrl, ConfigDict
 
@@ -22,11 +22,13 @@ class ContentResponse(BaseModel):
     summary:str
     status: str='unread'
     created_at:Optional[datetime]=None
+    updated_at:Optional[datetime]=None
 
     model_config=ConfigDict(from_attributes=True) #SQLAlchemy DB객체를 그대로 응답할 때 필요
 
 class ContentStatusRequest(BaseModel):
     status:str
+
 
 class ContentDeleteRequest(BaseModel):
     content_ids: list[int]
