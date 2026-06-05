@@ -6,7 +6,7 @@ def build_content_card(url:str, ai_result:dict)->dict:
     summary=ai_result.get("summary")
     channel=ai_result.get("channel")
     title=ai_result.get("title")
-    thumbnail_url=ai_result.get("thumbnail_url")
+    thumbnail=ai_result.get("thumbnail_url")
     return{
         "url":url,
         "video_id":video_id,
@@ -15,5 +15,5 @@ def build_content_card(url:str, ai_result:dict)->dict:
         "platform":"YouTube",
         "channel":channel,
         "title":title,
-        "thumbnail_url":thumbnail_url,
+        "thumbnail":thumbnail,
     }

@@ -1,10 +1,20 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from app.routers import content
 from app.db.session import get_db
 
 app = FastAPI()
+
+# CORS 미들웨어 추가 (Flutter Web 브라우저 요청 허용)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(content.router)
 
