@@ -60,3 +60,62 @@ async def analyze_youtube_url(url:str)-> dict:
         )
     
     return data
+
+#추천영상AI 요청 함수
+async def recommend_videos(
+        title:str,
+        category:str,
+        limit:int=5
+)->dict:
+    
+    try:
+        async with httpx.AsyncClient(timeout=120.0) as client:
+            response=await client.post(
+                f"{AI_SERVER_URL}/recommend",
+                json={
+                    "title":title,
+                    "category":category,
+                    "limit":limit
+                }
+            )
+
+    except httpx.ConnectError:
+        raise HTTPException(
+            status_code=503,
+            detail="추천영상AI 서버에 연결할 수 없습니다."
+        )
+    except httpx.TimeoutException:
+        raise HTTPException(
+            status_code=504,
+            detail="추천영상AI 서버 응답 시간이 초과되었습니다."
+        )
+    except httpx.RequestError:
+        raise HTTPException(
+            status_code=503,
+            detail="추천영상AI 서버 요청 중 오류가 발생하였습니다."
+        )
+    if response.status_code !=200:
+        raise HTTPException(
+            status_code=502,
+            detail=f"추천영상AI 분석 요청 실패. 응답코드: {response.status_code}"
+        )
+    
+    try:
+        #AI서버 응답을 dict로 바꾸기
+        data=response.json()
+    except ValueError:
+        raise HTTPException(
+            status_code=502,
+            detail="추천영상AI 응답이 JSON 형식이 아닙니다."
+        )
+    
+    required_fields = ["recommendations"]
+    missing_fields = [field for field in required_fields if field not in data]
+
+    if missing_fields:
+        raise HTTPException(
+            status_code=502,
+            detail=f"추천영상AI 추천 응답에 필요한 필드가 없습니다: {missing_fields}"
+        )
+
+    return data

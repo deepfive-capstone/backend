@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from app.routers import content
+from app.routers import content, recommend
 from app.db.session import get_db
 
 app = FastAPI()
@@ -17,6 +17,7 @@ app.add_middleware(
 )
 
 app.include_router(content.router)
+app.include_router(recommend.router)
 
 @app.get("/")
 def read_root():
