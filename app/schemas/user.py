@@ -1,5 +1,4 @@
-from pydantic import BaseModel
-from typing import Optional
+from pydantic import BaseModel, Field
 
 #프론트->백엔드
 class GoogleLoginRequest(BaseModel):
@@ -15,3 +14,9 @@ class LoginResponse(BaseModel):
     access_token: str 
     token_type: str = "bearer"
     user: UserResponse
+
+class NicknameUpdateRequest(BaseModel):
+    nickname: str=Field(...,min_length=1, max_length=10)
+
+class MessageResponse(BaseModel):
+    message: str
