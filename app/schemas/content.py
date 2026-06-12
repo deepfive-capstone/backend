@@ -11,6 +11,7 @@ class ContentCreateRequest(BaseModel):
 
 #백엔드->프론트 response 형식(DB 저장 시 변경)
 class ContentResponse(BaseModel):
+    content_id: Optional[int] = None
     url:str
     video_id:Optional[str]=None
     platform: str="YouTube"
