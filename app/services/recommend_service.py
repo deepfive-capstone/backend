@@ -12,7 +12,7 @@ async def get_recommend_videos(
 ) -> dict:
     #DB 조회
     result = (
-        db.query(Content)
+        db.query(Content, Category.name)
         .join(Category, Content.category_id == Category.category_id)
         .filter(Content.content_id == request.content_id)
         .first()
