@@ -7,7 +7,7 @@ AI_SERVER_URL="http://127.0.0.1:8001"
 async def analyze_youtube_url(url:str)-> dict: 
     try:
         #AI서버 호출하는 부분
-        async with httpx.AsyncClient(timeout=120.0) as client:
+        async with httpx.AsyncClient(timeout=180.0) as client:
             response=await client.post( 
                 f"{AI_SERVER_URL}/analyze",
                 json={"url":url}
@@ -69,7 +69,7 @@ async def recommend_videos(
 )->dict:
     
     try:
-        async with httpx.AsyncClient(timeout=120.0) as client:
+        async with httpx.AsyncClient(timeout=180.0) as client:
             response=await client.post(
                 f"{AI_SERVER_URL}/recommend",
                 json={

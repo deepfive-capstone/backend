@@ -8,7 +8,6 @@ def build_content_card(url:str, ai_result:dict)->dict:
     title=ai_result.get("title")
     thumbnail_url=ai_result.get("thumbnail_url")
     return{
-        "content_id": 1,  #임시값
         "url":url,
         "video_id":video_id,
         "category":category,

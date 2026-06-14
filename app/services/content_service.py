@@ -10,7 +10,7 @@ from app.models.category import Category
 
 
 
-async def get_content_card(url: str, db: Session) -> dict:
+async def get_content_card(url: str, db: Session, user_id:int) -> dict:
     # 1. AI 서버 분석 요청
     ai_result = await analyze_youtube_url(url)
 
@@ -23,6 +23,7 @@ async def get_content_card(url: str, db: Session) -> dict:
 
     # 4. 실제 DB 스키마 컬럼 명칭에 맞춰 Content 객체 생성
     new_content = Content(
+        user_id=user_id,
         category_id=category_id,
         original_url=url,
         video_id=content_card.get("video_id"),  # DB 반영
